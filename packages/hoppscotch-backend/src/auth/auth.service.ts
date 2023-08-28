@@ -28,7 +28,7 @@ import { AuthError } from 'src/types/AuthError';
 import { AuthUser, IsAdmin } from 'src/types/AuthUser';
 import { VerificationToken } from '@prisma/client';
 import { Origin } from './helper';
-
+```typescript
 @Injectable()
 export class AuthService {
   constructor(
@@ -38,17 +38,29 @@ export class AuthService {
     private readonly mailerService: MailerService,
   ) {}
 
+  // Existing methods...
+
   /**
-   * Generate Id and token for email Magic-Link auth
+   * Verify and authenticate user from received data for Magic-Link
    *
-   * @param user User Object
-   * @returns Created VerificationToken token
+   * @param magicLinkIDTokens magic-link verification tokens from client
+   * @returns Either of generated AuthTokens
    */
-  private async generateMagicLinkTokens(user: AuthUser) {
-    const salt = await bcrypt.genSalt(
-      parseInt(process.env.TOKEN_SALT_COMPLEXITY),
-    );
-    const expiresOn = DateTime.now()
+  async verifyMagicLinkTokens(
+    magicLinkIDTokens: VerifyMagicDto,
+  ): Promise<E.Right<AuthTokens> | E.Left<AuthError>> {
+    // Existing logic...
+  }
+
+  /**
+   * Signs user in with Keycloak.
+   * @returns A promise that resolves when the authentication is completed
+   */
+  async signInUserWithKeycloak(): Promise<void> {
+    // Add Keycloak authentication logic here
+  }
+}
+```
       .plus({ hours: parseInt(process.env.MAGIC_LINK_TOKEN_VALIDITY) })
       .toISO()
       .toString();

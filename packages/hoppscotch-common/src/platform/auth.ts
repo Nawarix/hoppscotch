@@ -1,7 +1,7 @@
 import { ClientOptions } from "@urql/core"
 import { Observable } from "rxjs"
 
-/**
+  /**
  * A common (and required) set of fields that describe a user.
  */
 export type HoppUser = {
@@ -192,6 +192,12 @@ export type AuthPlatformDef = {
    * @returns A promise that resolves with the user info when auth is completed
    */
   signInUserWithMicrosoft: () => Promise<void>
+
+  /**
+   * Signs user in with Keycloak.
+   * @returns A promise that resolves when the authentication is completed
+   */
+  signInUserWithKeycloak: () => Promise<void>
 
   /**
    * Signs out the user from auth
